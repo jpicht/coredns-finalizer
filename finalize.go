@@ -97,9 +97,7 @@ func (s *Finalize) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Ms
 						answers = append(answers, rr)
 
 						goto resolveCname
-					case dns.TypeA:
-						fallthrough
-					case dns.TypeAAAA:
+					case r.Question[0].Qtype:
 						answers = append(answers, up.Answer...)
 					default:
 						log.Errorf("Upstream server returned unsupported type [%+v] for CNAME question [%+v]", rr, up.Question[0])
